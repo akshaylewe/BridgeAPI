@@ -23,9 +23,10 @@ def fetch(id):
     
 def fetch1(id):
     cursor = connection.cursor()
-    cursor.execute('''select * from submissions where "receiverAddr"='{}' '''.format(str(id)))
+    cursor.execute('''select "txHash" from submissions ''')
     print("Selecting rows from submissions table using cursor.fetchall")
     fetched = cursor.fetchall()
+    print('''select * from submissions where "receiverAddr"='{}' '''.format(str(id)))
     cursor.close()
     return fetched
     
@@ -59,11 +60,9 @@ class Transaction(APIView):
             'Cache-control': 'no-store, max-age=0',
             'X-Frame-Options': 'DENY'
             }
-            id = self.request.data ["id"]
-            print(id)
             data = fetch1(id)
-            print(data[0][1])
+            print(data)
         except Exception as e:
-            print(e)
+            raise e
             return Response({"status": 0, "data": str(e)})
-        return Response({"status": 1, "hash": data[0][1], "submissionId": data[0][0], "debridgeId": data[0][4], "data": data})
+        return Response({"status": 1, "data": data})
