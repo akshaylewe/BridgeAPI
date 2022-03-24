@@ -16,9 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from api.views import Submission
+from api.views import Submission, Transaction
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', Submission.as_view())
+    path('', Submission.as_view()),
+    path('txns/', Transaction.as_view())
 ]
