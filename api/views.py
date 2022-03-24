@@ -53,16 +53,16 @@ class Submission(APIView):
 
 class Transaction(APIView):
     
-    def post(self, request, format=None):
-        time.sleep(20)
+    def get(self, request, format=None):
         try:
             headers = {
             'Cache-control': 'no-store, max-age=0',
             'X-Frame-Options': 'DENY'
             }
             data = fetch1(id)
-            print(data)
+            abc = []
+            for x in data:
+                abc.append(x[0])
         except Exception as e:
-            raise e
             return Response({"status": 0, "data": str(e)})
-        return Response({"status": 1, "data": data})
+        return Response({"status": 1, "data": abc})
